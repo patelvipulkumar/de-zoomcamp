@@ -1,6 +1,6 @@
 variable "credentials" {
   description = "My Credentials"
-  default     = "/home/NEOPOSTADVPatel_na/.gc/ny-rides.json"
+  default     = "/home/VPatel_na/.gc/ny-rides.json"
   #ex: if you have a directory where this file is called keys with your service account json file
   #saved there as my-creds.json you could use default = "./keys/my-creds.json"
 }
@@ -8,7 +8,7 @@ variable "credentials" {
 
 variable "project" {
   description = "Project"
-  default     = "project-ba995651-8202-4620-8c2"
+  default     = "-ba995651-8202-4620-8c2"
 }
 
 variable "region" {
