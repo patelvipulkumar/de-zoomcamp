@@ -5,6 +5,7 @@ import click
 import pandas as pd
 from sqlalchemy import create_engine
 from tqdm.auto import tqdm
+import uv
 
 # Green taxi trip data types
 green_dtype = {
