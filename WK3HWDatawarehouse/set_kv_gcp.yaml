@@ -1,0 +1,28 @@
+id: set_kv_gcp
+namespace: zoomcamp
+
+tasks:
+  - id: gcp_project_id
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_PROJECT_ID
+    kvType: STRING
+    value: kestra-sandbox # TODO replace with your project id
+
+  - id: gcp_location
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_LOCATION
+    kvType: STRING
+    value: europe-west2
+
+  - id: gcp_bucket_name
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_BUCKET_NAME
+    kvType: STRING
+    value: your-name-kestra # TODO make sure it's globally unique!
+    tasks:
+      - id: create_gcp_objects
+        type: io.kestra.plugin.core.flow.Subflow
+        namespace: zoomcamp
+        flowId: create_gcp_objects
+        wait: true
+        transmitFailed: false
