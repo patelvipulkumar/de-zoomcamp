@@ -3,12 +3,14 @@ namespace: zoomcamp
 
 inputs:
   - id: taxi_type
-    type: STRING    
-    defaults: "YELLOW"
+    type: ARRAY
+    itemType: STRING    
+    defaults: ["yellow"]
 
   - id: year
-    type: STRING     
-    defaults: "2024"
+    type: ARRAY
+    itemType: STRING     
+    defaults: ["2024"]
   
   - id: month
     type: ARRAY

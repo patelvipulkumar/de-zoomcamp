@@ -32,7 +32,7 @@ tasks:
     taskRunner:
       type: io.kestra.plugin.core.runner.Process
     commands:
-      - wget -qO- https://d37ci6vzurychx.cloudfront.net/trip-data/{{render(vars.file)}}
+      - wget -q -O "{{render(vars.file)}}" https://d37ci6vzurychx.cloudfront.net/trip-data/{{render(vars.file)}}
 
   - id: upload_to_gcs
     type: io.kestra.plugin.gcp.gcs.Upload

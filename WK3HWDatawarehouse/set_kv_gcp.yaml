@@ -6,24 +6,24 @@ tasks:
     type: io.kestra.plugin.core.kv.Set
     key: GCP_PROJECT_ID
     kvType: STRING
-    value: kestra-sandbox # TODO replace with your project id
+    value: "project-ba995651-8202-4620-8c2" # TODO replace with your project id
 
   - id: gcp_location
     type: io.kestra.plugin.core.kv.Set
     key: GCP_LOCATION
     kvType: STRING
-    value: europe-west2
+    value: "US"
 
   - id: gcp_bucket_name
     type: io.kestra.plugin.core.kv.Set
     key: GCP_BUCKET_NAME
     kvType: STRING
-    value: your-name-kestra # TODO make sure it's globally unique!
-    tasks:
-      - id: create_gcp_objects
-        type: io.kestra.plugin.core.flow.Subflow
-        namespace: zoomcamp
-        flowId: create_gcp_objects
-        wait: true
-        transmitFailed: false
+    value: "ny-taxi-yellow-bucket" # TODO make sure it's globally unique!
+    
 
+  - id: create_gcp_objects
+    type: io.kestra.plugin.core.flow.Subflow
+    namespace: zoomcamp
+    flowId: create_gcp_objects
+    wait: true
+    transmitFailed: false

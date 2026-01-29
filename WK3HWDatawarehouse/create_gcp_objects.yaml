@@ -5,15 +5,15 @@ tasks:
   - id: create_gcs_bucket
     type: io.kestra.plugin.gcp.gcs.CreateBucket
     ifExists: SKIP
-    storageClass: REGIONAL
+    storageClass: STANDARD
     name: "{{kv('GCP_BUCKET_NAME')}}" 
-    tasks:
-      - id: foreach_ny_taxi
-        type: io.kestra.plugin.core.flow.Subflow
-        namespace: zoomcamp
-        flowId: foreach_ny_taxi
-        wait: true
-        transmitFailed: false
+    
+  - id: foreach_ny_taxi
+    type: io.kestra.plugin.core.flow.Subflow
+    namespace: zoomcamp
+    flowId: foreach_ny_taxi
+    wait: true
+    transmitFailed: false
         
 
 pluginDefaults:
@@ -23,4 +23,3 @@ pluginDefaults:
       projectId: "{{kv('GCP_PROJECT_ID')}}"
       location: "{{kv('GCP_LOCATION')}}"
       bucket: "{{kv('GCP_BUCKET_NAME')}}"
-
