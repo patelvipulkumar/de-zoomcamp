@@ -1,0 +1,34 @@
+id: set_kv_gcp
+namespace: zoomcamp
+
+tasks:
+  - id: gcp_project_id
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_PROJECT_ID
+    kvType: STRING
+    value: "995651-8202-4620-8c2" # TODO replace with your project id
+
+  - id: gcp_location
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_LOCATION
+    kvType: STRING
+    value: "US"
+
+  - id: gcp_bucket_name
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_BUCKET_NAME
+    kvType: STRING
+    value: "ny-taxi-b" # TODO make sure it's globally unique!
+
+  - id: gcp_dataset
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_DATASET
+    kvType: STRING
+    value: "ny_taxi_ds" # TODO replace with your dataset name
+
+  - id: create_gcp_objects
+    type: io.kestra.plugin.core.flow.Subflow
+    namespace: zoomcamp
+    flowId: create_gcp_objects
+    wait: true
+    transmitFailed: false
