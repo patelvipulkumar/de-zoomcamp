@@ -12,10 +12,10 @@ sources:
         ny_taxi_ds
       {%- else -%}
         prod
-      {%- endif -%}    
+      {%- endif -%}
     tables:
       - name: green_tripdata
-        description: Raw green taxi trip records        
+        description: Raw green taxi trip records
         columns:
           - name: vendorid
             description: "Taxi technology provider (1 = Creative Mobile Technologies, 2 = VeriFone Inc.) - Note: Raw data may contain nulls, filtered in staging"
@@ -57,7 +57,7 @@ sources:
             description: E-hail fee
 
       - name: yellow_tripdata
-        description: Raw yellow taxi trip records        
+        description: Raw yellow taxi trip records
         columns:
           - name: vendorid
             description: "Taxi technology provider (1 = Creative Mobile Technologies, 2 = VeriFone Inc.) - Note: Raw data may contain nulls, filtered in staging"
