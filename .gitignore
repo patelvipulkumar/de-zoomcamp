@@ -2,22 +2,22 @@ ny-rides.json
 
 # Default .gitignore content added by dbt Cloud# you shouldn't commit these into source control
 # these are the default directory names, adjust/add to fit your needs
-target/
-dbt_packages/
-logs/
+WK4HWDataAnalytics/taxi_rides_ny/target/
+WK4HWDataAnalytics/taxi_rides_ny/dbt_packages/
+WK4HWDataAnalytics/taxi_rides_ny/logs/
 # end dbt Cloud content
 
 # Default .gitignore content added by dbt Cloud# you shouldn't commit these into source control
 # these are the default directory names, adjust/add to fit your needs
-target/
-dbt_packages/
-logs/
+WK4HWDataAnalytics/taxi_rides_ny/target/
+WK4HWDataAnalytics/taxi_rides_ny/dbt_packages/
+WK4HWDataAnalytics/taxi_rides_ny/logs/
 # end dbt Cloud content
 dbt_internal_packages/
 
 # Default .gitignore content added by dbt Cloud# you shouldn't commit these into source control
 # these are the default directory names, adjust/add to fit your needs
-target/
-dbt_packages/
-logs/
+WK4HWDataAnalytics/taxi_rides_ny/target/
+WK4HWDataAnalytics/taxi_rides_ny/dbt_packages/
+WK4HWDataAnalytics/taxi_rides_ny/logs/
 # end dbt Cloud content
