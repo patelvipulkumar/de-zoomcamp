@@ -9,17 +9,13 @@ sources:
       {%- endif -%}
     schema: |
       {%- if target.type == 'bigquery' -%}
-        nytaxi
+        ny_taxi_ds
       {%- else -%}
         prod
-      {%- endif -%}
-    freshness:
-      warn_after: {count: 24, period: hour}
-      error_after: {count: 48, period: hour}
+      {%- endif -%}    
     tables:
       - name: green_tripdata
-        description: Raw green taxi trip records
-        loaded_at_field: lpep_pickup_datetime
+        description: Raw green taxi trip records        
         columns:
           - name: vendorid
             description: "Taxi technology provider (1 = Creative Mobile Technologies, 2 = VeriFone Inc.) - Note: Raw data may contain nulls, filtered in staging"
@@ -61,8 +57,7 @@ sources:
             description: E-hail fee
 
       - name: yellow_tripdata
-        description: Raw yellow taxi trip records
-        loaded_at_field: tpep_pickup_datetime
+        description: Raw yellow taxi trip records        
         columns:
           - name: vendorid
             description: "Taxi technology provider (1 = Creative Mobile Technologies, 2 = VeriFone Inc.) - Note: Raw data may contain nulls, filtered in staging"
