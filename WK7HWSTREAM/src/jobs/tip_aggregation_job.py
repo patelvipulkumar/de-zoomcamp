@@ -2,15 +2,13 @@ from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.table import EnvironmentSettings, StreamTableEnvironment
 
 
-def create_events_aggregated_sink(t_env):
-    table_name = 'processed_events_aggregated'
+def create_tip_aggregated_sink(t_env):
+    table_name = 'processed_tip_aggregated'
     sink_ddl = f"""
         CREATE TABLE {table_name} (
             window_start TIMESTAMP(3),
-            PULocationID INT,
-            num_trips BIGINT,
-            total_revenue DOUBLE,
-            PRIMARY KEY (window_start, PULocationID) NOT ENFORCED
+            total_tip DOUBLE,
+            PRIMARY KEY (window_start) NOT ENFORCED
         ) WITH (
             'connector' = 'jdbc',
             'url' = 'jdbc:postgresql://postgres:5432/postgres',
@@ -30,6 +28,7 @@ def create_events_source_kafka(t_env):
             PULocationID INTEGER,
             DOLocationID INTEGER,
             trip_distance DOUBLE,
+            tip_amount DOUBLE,
             total_amount DOUBLE,
             lpep_pickup_datetime VARCHAR,
             event_timestamp AS TO_TIMESTAMP(lpep_pickup_datetime, 'yyyy-MM-dd HH:mm:ss'),
@@ -48,7 +47,7 @@ def create_events_source_kafka(t_env):
     return table_name
 
 
-def log_aggregation():
+def tip_aggregation():
     # Set up the execution environment
     env = StreamExecutionEnvironment.get_execution_environment()
     env.enable_checkpointing(10 * 1000)
@@ -61,19 +60,17 @@ def log_aggregation():
     try:
         # Create Kafka table
         source_table = create_events_source_kafka(t_env)
-        aggregated_table = create_events_aggregated_sink(t_env)
+        aggregated_table = create_tip_aggregated_sink(t_env)
 
         t_env.execute_sql(f"""
         INSERT INTO {aggregated_table}
         SELECT
             window_start,
-            PULocationID,
-            COUNT(*) AS num_trips,
-            SUM(total_amount) AS total_revenue
+            SUM(tip_amount) AS total_tip
         FROM TABLE(
-            TUMBLE(TABLE {source_table}, DESCRIPTOR(event_timestamp), INTERVAL '5' MINUTE)
+            TUMBLE(TABLE {source_table}, DESCRIPTOR(event_timestamp), INTERVAL '1' HOUR)
         )
-        GROUP BY window_start, PULocationID;
+        GROUP BY window_start;
 
         """).wait()
 
@@ -82,4 +79,4 @@ def log_aggregation():
 
 
 if __name__ == '__main__':
-    log_aggregation()
+    tip_aggregation()

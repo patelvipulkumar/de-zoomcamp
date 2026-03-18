@@ -56,6 +56,7 @@ def log_processing():
     # Set up the execution environment
     env = StreamExecutionEnvironment.get_execution_environment()
     env.enable_checkpointing(10 * 1000)
+    env.set_parallelism(1)
 
     # Set up the table environment
     settings = EnvironmentSettings.new_instance().in_streaming_mode().build()

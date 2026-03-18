@@ -2,14 +2,14 @@ from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.table import EnvironmentSettings, StreamTableEnvironment
 
 
-def create_events_aggregated_sink(t_env):
-    table_name = 'processed_events_aggregated'
+def create_session_aggregated_sink(t_env):
+    table_name = 'processed_session_aggregated'
     sink_ddl = f"""
         CREATE TABLE {table_name} (
             window_start TIMESTAMP(3),
             PULocationID INT,
             num_trips BIGINT,
-            total_revenue DOUBLE,
+            total_amount DOUBLE,
             PRIMARY KEY (window_start, PULocationID) NOT ENFORCED
         ) WITH (
             'connector' = 'jdbc',
@@ -48,7 +48,7 @@ def create_events_source_kafka(t_env):
     return table_name
 
 
-def log_aggregation():
+def session_aggregation():
     # Set up the execution environment
     env = StreamExecutionEnvironment.get_execution_environment()
     env.enable_checkpointing(10 * 1000)
@@ -61,7 +61,7 @@ def log_aggregation():
     try:
         # Create Kafka table
         source_table = create_events_source_kafka(t_env)
-        aggregated_table = create_events_aggregated_sink(t_env)
+        aggregated_table = create_session_aggregated_sink(t_env)
 
         t_env.execute_sql(f"""
         INSERT INTO {aggregated_table}
@@ -69,9 +69,9 @@ def log_aggregation():
             window_start,
             PULocationID,
             COUNT(*) AS num_trips,
-            SUM(total_amount) AS total_revenue
+            SUM(total_amount) AS total_amount
         FROM TABLE(
-            TUMBLE(TABLE {source_table}, DESCRIPTOR(event_timestamp), INTERVAL '5' MINUTE)
+            SESSION(TABLE {source_table}, DESCRIPTOR(event_timestamp), INTERVAL '5' MINUTE)
         )
         GROUP BY window_start, PULocationID;
 
@@ -82,4 +82,4 @@ def log_aggregation():
 
 
 if __name__ == '__main__':
-    log_aggregation()
+    session_aggregation()
